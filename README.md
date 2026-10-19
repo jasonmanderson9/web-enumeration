@@ -78,7 +78,7 @@ This is a learning project, not a replacement for mature tools. A few honest sho
 
 - Requests are made sequentially, one at a time. Tools like Gobuster use threads and are orders of magnitude faster.
 - There's no response filtering beyond status codes. ffuf lets you filter by response size, words, and lines, which matters when a server returns a custom 404 page with a 200 status code.
-- No recursion — it won't descend into discovered directories.
+- No recursion, which means it won't descend into discovered directories.
 
 If you want to extend it, threading is the natural first step. Reading the source of Gobuster or feroxbuster is a good way to see how the pros handle these problems.
 
