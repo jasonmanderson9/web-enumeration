@@ -1,6 +1,6 @@
 # Web Enumeration Tool
 
-A small Python tool for discovering hidden directories and subdomains on a target web server. I built this as a learning project to understand how enumeration tools like Gobuster, dirb, and ffuf work under the hood, and to have something of my own to use in CTFs and authorized pentests.
+A small Python tool for discovering hidden directories and subdomains on a target web server. I built this as a learning project to show how enumeration tools like Gobuster, dirb, and ffuf work under the hood.
 
 I'm writing a full walkthrough of how I built this and how the underlying techniques work. You can find it here: [write-up link coming soon]
 
@@ -13,7 +13,7 @@ The tool has two modes:
 
 ## How it works
 
-Enumeration tools are conceptually simple: web servers almost always host more than what is linked on their public pages. Admin panels, backup files, test environments, and forgotten endpoints often sit at predictable paths. Since there's no way to query a server for a list of its directories, the only option is to guess — take a list of common names and ask the server about each one.
+Enumeration tools are conceptually simple: web servers almost always host more than what is linked on their public pages. Admin panels, backup files, test environments, and forgotten endpoints often sit at predictable paths. Since there's no way to query a server for a list of its directories, the only option is to guess or brute-force by taking a list of common names and ask the server about each one.
 
 For every word in the wordlist, the script sends an HTTP request and looks at the response status code:
 
@@ -22,11 +22,11 @@ For every word in the wordlist, the script sends an HTTP request and looks at th
 - **403 Forbidden** — the resource exists but access is denied.
 - **404 Not Found** — nothing there. This is the vast majority of responses.
 
-The tool prints anything that comes back as a 200, 301, or 302 — those are the potential leads. Redirects are disabled in the requests so the tool sees the raw status code instead of silently following them. (A 403 can be a lead too, but the current version doesn't report them; adding that is a one-line change if you want to experiment.)
+The tool prints anything that comes back as a 200, 301, or 302. Those are the potential leads. Redirects are disabled in the requests so the tool sees the raw status code instead of silently following them. (A 403 can be a lead too, but the current version doesn't report them; adding that is a one-line change if you want to experiment.)
 
 Subdomain enumeration works the same way, except the wordlist entries are prepended to the domain instead of appended to a path.
 
-Everything else — argument parsing, error handling for timeouts and unreachable hosts, formatting — is just plumbing around that core loop.
+Everything else such as argument parsing, error handling for timeouts and unreachable hosts, formatting etc. is just plumbing around that core loop.
 
 ## Requirements
 
