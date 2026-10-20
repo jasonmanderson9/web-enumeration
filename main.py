@@ -24,9 +24,11 @@ def enumerate_directories(url, wordlist_path):
             elif response.status_code == 403:
                 print(f"[!] Forbidden: {target_url} (Status Code: {response.status_code})")
             elif response.status_code == 404:
-                continue
-        except requests.RequestException:
-            pass
+                print(f"[-] Not Found: {target_url} (Status Code: {response.status_code})")
+            else:
+                print(f"[?] Response: {target_url} (Status Code: {response.status_code})")
+        except requests.RequestException as error:
+            print(f"[!] Request failed: {target_url} ({error})")
 
 def enumerate_subdomains(domain, wordlist_path):
     try:
@@ -47,9 +49,11 @@ def enumerate_subdomains(domain, wordlist_path):
             elif response.status_code == 403:
                 print(f"[!] Forbidden: {target_subdomain} (Status Code: {response.status_code})")
             elif response.status_code == 404:
-                continue
-        except requests.RequestException:
-            pass
+                print(f"[-] Not Found: {target_subdomain} (Status Code: {response.status_code})")
+            else:
+                print(f"[?] Response: {target_subdomain} (Status Code: {response.status_code})")
+        except requests.RequestException as error:
+            print(f"[!] Request failed: {target_subdomain} ({error})")
         
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Directory and Subdomain Enumeration Tool")
