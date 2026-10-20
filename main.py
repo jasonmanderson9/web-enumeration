@@ -21,6 +21,10 @@ def enumerate_directories(url, wordlist_path):
             response = requests.get(target_url, timeout=5, allow_redirects=False)
             if response.status_code in [200, 301, 302]:
                 print(f"[+] Found: {target_url} (Status Code: {response.status_code})")
+            elif response.status_code == 403:
+                print(f"[!] Forbidden: {target_url} (Status Code: {response.status_code})")
+            elif response.status_code == 404:
+                continue
         except requests.RequestException:
             pass
 
@@ -40,6 +44,10 @@ def enumerate_subdomains(domain, wordlist_path):
             response = requests.get(f"http://{target_subdomain}", timeout=5, allow_redirects=False)
             if response.status_code in [200, 301, 302]:
                 print(f"[+] Found: {target_subdomain} (Status Code: {response.status_code})")
+            elif response.status_code == 403:
+                print(f"[!] Forbidden: {target_subdomain} (Status Code: {response.status_code})")
+            elif response.status_code == 404:
+                continue
         except requests.RequestException:
             pass
         
