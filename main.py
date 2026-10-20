@@ -1,6 +1,10 @@
 import requests
 import sys
 import argparse
+import urllib3
+
+
+urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 
 def enumerate_directories(url, wordlist_path):
