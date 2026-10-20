@@ -20,7 +20,8 @@ For every word in the wordlist, the script sends an HTTP request and looks at th
 - **200 OK** — reported as a potential lead.
 - **403 Forbidden** — reported separately; the resource may exist but deny access.
 - **404 Not Found** — skipped to reduce output.
-- **Other status codes**, including redirects — reported as responses, but not followed.
+- **302 Found** — skipped; the scan continues with the next wordlist entry.
+- **Other status codes**, including other redirects — reported as responses, but not followed.
 
 Both modes send a Chrome-style `User-Agent` header. Requests use a five-second timeout, do not follow redirects, and disable TLS certificate verification; the corresponding urllib3 warning is suppressed. Disabling certificate verification means the server's identity is not validated, so use this only where appropriate.
 
