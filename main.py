@@ -6,6 +6,11 @@ import urllib3
 
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
+REQUEST_HEADERS = {
+    "User-Agent": "WebEnumeration/1.0",
+    "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+}
+
 
 def enumerate_directories(url, wordlist_path):
     try:
@@ -22,8 +27,17 @@ def enumerate_directories(url, wordlist_path):
         target_url = f"{cleaned_dir_name}/{dir_name.lstrip('/')}"
 
         try:
-            response = requests.get(target_url, timeout=5, allow_redirects=False, verify=False)
-            if response.status_code in [200, 301, 302]:
+            response = requests.get(
+                target_url,
+                headers=REQUEST_HEADERS,
+                timeout=5,
+                allow_redirects=False,
+                verify=False,
+            )
+            if 300 <= response.status_code < 400:
+                continue
+
+            if response.status_code == 200:
                 print(f"[+] Found: {target_url} (Status Code: {response.status_code})")
             elif response.status_code == 403:
                 print(f"[!] Forbidden: {target_url} (Status Code: {response.status_code})")
@@ -47,8 +61,17 @@ def enumerate_subdomains(domain, wordlist_path):
     for sub in subdomains:
         target_subdomain = f"{sub}.{domain}"
         try:
-            response = requests.get(f"http://{target_subdomain}", timeout=5, allow_redirects=False, verify=False)
-            if response.status_code in [200, 301, 302]:
+            response = requests.get(
+                f"http://{target_subdomain}",
+                headers=REQUEST_HEADERS,
+                timeout=5,
+                allow_redirects=False,
+                verify=False,
+            )
+            if 300 <= response.status_code < 400:
+                continue
+
+            if response.status_code == 200:
                 print(f"[+] Found: {target_subdomain} (Status Code: {response.status_code})")
             elif response.status_code == 403:
                 print(f"[!] Forbidden: {target_subdomain} (Status Code: {response.status_code})")
