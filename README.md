@@ -22,7 +22,7 @@ For every word in the wordlist, the script sends an HTTP request and looks at th
 - **403 Forbidden** — the resource exists but access is denied.
 - **404 Not Found** — nothing there. This is the vast majority of responses.
 
-The tool reports responses with status codes 200, 301, and 302 as potential leads, reports 403 responses separately as forbidden resources that may exist but deny access, and displays 404 and other HTTP response codes as well. Request failures are also reported. Redirects are disabled in the requests so the tool sees the raw status code instead of silently following them.
+The tool reports responses with status codes 200, 301, and 302 as potential leads, reports 403 responses separately as forbidden resources that may exist but deny access, and skips 404 responses. Other HTTP response codes and request failures are also reported. Redirects are disabled in the requests so the tool sees the raw status code instead of silently following them.
 
 Subdomain enumeration works the same way, except the wordlist entries are prepended to the domain instead of appended to a path.
 
