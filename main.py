@@ -18,7 +18,7 @@ def enumerate_directories(url, wordlist_path):
         target_url = f"{cleaned_dir_name}/{dir_name.lstrip('/')}"
 
         try:
-            response = requests.get(target_url, timeout=5, allow_redirects=False)
+            response = requests.get(target_url, timeout=5, allow_redirects=False, verify=False)
             if response.status_code in [200, 301, 302]:
                 print(f"[+] Found: {target_url} (Status Code: {response.status_code})")
             elif response.status_code == 403:
@@ -43,7 +43,7 @@ def enumerate_subdomains(domain, wordlist_path):
     for sub in subdomains:
         target_subdomain = f"{sub}.{domain}"
         try:
-            response = requests.get(f"http://{target_subdomain}", timeout=5, allow_redirects=False)
+            response = requests.get(f"http://{target_subdomain}", timeout=5, allow_redirects=False, verify=False)
             if response.status_code in [200, 301, 302]:
                 print(f"[+] Found: {target_subdomain} (Status Code: {response.status_code})")
             elif response.status_code == 403:
