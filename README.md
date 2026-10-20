@@ -17,12 +17,12 @@ Enumeration tools are conceptually simple: web servers almost always host more t
 
 For every word in the wordlist, the script sends an HTTP request and looks at the response status code:
 
-- **200 OK** — the resource exists and is accessible.
-- **3xx Redirect** — not followed or reported; the scan moves on to the next wordlist entry.
-- **403 Forbidden** — the resource exists but access is denied.
-- **404 Not Found** — nothing there. This is the vast majority of responses.
+- **200 OK** — reported as a potential lead.
+- **403 Forbidden** — reported separately; the resource may exist but deny access.
+- **404 Not Found** — skipped to reduce output.
+- **Other status codes**, including redirects — reported as responses, but not followed.
 
-The tool reports 200 responses as potential leads, reports 403 responses separately as forbidden resources that may exist but deny access, skips 404 responses, and silently skips redirects (3xx) while continuing the scan. Other HTTP response codes and request failures are also reported. Requests include a descriptive `WebEnumeration/1.0` User-Agent and an `Accept` header. Redirects are disabled so the tool does not follow them.
+Both modes send a Chrome-style `User-Agent` header. Requests use a five-second timeout, do not follow redirects, and disable TLS certificate verification; the corresponding urllib3 warning is suppressed. Disabling certificate verification means the server's identity is not validated, so use this only where appropriate.
 
 Subdomain enumeration works the same way, except the wordlist entries are prepended to the domain instead of appended to a path.
 
