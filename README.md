@@ -2,7 +2,7 @@
 
 A small Python tool for discovering hidden directories and subdomains on a target web server. I built this as a learning project to show how enumeration tools like Gobuster, dirb, and ffuf work under the hood.
 
-I'm writing a full walkthrough of how I built this and how the underlying techniques work. You can find it here: [[write-up link coming soon](https://derzy.io/projects/building-your-own-web-enumeration-tool/)]
+I'm writing a full walkthrough of how I built this and how the underlying techniques work. You can find it here: [[https://derzy.io/projects/building-your-own-web-enumeration-tool/](https://derzy.io/projects/building-your-own-web-enumeration-tool/)]
 
 ## What it does
 
