@@ -20,7 +20,7 @@ For every word in the wordlist, the script sends an HTTP request and looks at th
 - **200 OK** — reported as a potential lead.
 - **403 Forbidden** — reported separately; the resource may exist but deny access.
 - **404 Not Found** — skipped to reduce output.
-- **302 Found** — skipped; the scan continues with the next wordlist entry.
+- **301 Moved Permanently** and **302 Found** — skipped; the scan continues with the next wordlist entry.
 - **Other status codes**, including other redirects — reported as responses, but not followed.
 
 Both modes send a Chrome-style `User-Agent` header. Requests use a five-second timeout, do not follow redirects, and disable TLS certificate verification; the corresponding urllib3 warning is suppressed. Disabling certificate verification means the server's identity is not validated, so use this only where appropriate.
@@ -64,9 +64,11 @@ python main.py -d example.com -w wordlist.txt
 | `-d`, `--domain` | Target domain to scan for subdomains |
 | `-w`, `--wordlist` | Path to the wordlist file (required) |
 
+Choose exactly one target option (`-u` or `-d`) for each run.
+
 ## Wordlists
 
-The quality of enumeration depends almost entirely on the wordlist. This repo doesn't ship with one, so bring your own. Good starting points:
+The quality of enumeration depends almost entirely on the wordlist. This repo doesn't include one, so bring your own. For subdomain enumeration, use a dedicated subdomain list; it will work much better than a directory list. Good starting points:
 
 - [SecLists](https://github.com/danielmiessler/SecLists) — `Discovery/Web-Content/directory-list-2.3-medium.txt` is the classic choice for directories
 - [raft wordlists](https://github.com/danielmiessler/SecLists/tree/master/Discovery/Web-Content) — also in SecLists, larger and noisier
