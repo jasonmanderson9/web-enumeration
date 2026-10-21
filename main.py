@@ -63,15 +63,15 @@ def enumerate_subdomains(domain, wordlist_path):
         
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Directory and Subdomain Enumeration Tool")
-    parser.add_argument("-u", "--url", help="Target URL to scan for directories")
-    parser.add_argument("-d", "--domain", help="Target domain to scan for subdomains")
+
+    target = parser.add_mutually_exclusive_group(required=True)
+    target.add_argument("-u", "--url", help="Target URL to scan for directories")
+    target.add_argument("-d", "--domain", help="Target domain to scan for subdomains")
+
     parser.add_argument("-w", "--wordlist", required=True, help="Path to the wordlist file")
     args = parser.parse_args()
 
     if args.url:
         enumerate_directories(args.url, args.wordlist)
-    elif args.domain:
-        enumerate_subdomains(args.domain, args.wordlist)
     else:
-        print("Error: Please provide either a URL (-u) or a domain (-d) to scan.")
-        sys.exit(1)
+        enumerate_subdomains(args.domain, args.wordlist)
